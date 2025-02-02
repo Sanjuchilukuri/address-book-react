@@ -1,0 +1,39 @@
+*{
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+}
+:root {
+    --white: #FFFFFF;
+    --primary-sky-blue: #3399CC;
+    --light-sky-blue: #CEE7F2;
+    --dark-gray: #333333;
+    --forest-green: #468C00;
+}
+.cursor-pointer{
+    cursor: pointer;
+}
+.bg-sky-blue{
+    background-color: var(--primary-sky-blue) !important;
+}
+.bg-white{
+    background-color: var(--white) !important;
+}
+.bg-light-sky-blue{
+    background-color: var(--light-sky-blue) !important;
+}
+.bg-dark-grey{
+    background-color: var(--dark-gray) !important;
+}
+.bg-forest-green{
+    background-color: var(--forest-green) !important;
+}
+.text-white{
+    color: var(--white) !important;
+}
+.fw-700{
+    font-weight:300;
+}
+.outline-0{
+    outline: none;
+}
