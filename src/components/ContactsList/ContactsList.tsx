@@ -40,4 +40,4 @@ function ContactsList() {
   )
 }
 
-export default ContactsList
+export default ContactsList;

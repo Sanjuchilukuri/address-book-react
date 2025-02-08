@@ -1,11 +1,13 @@
 import './App.css';
-import Header from "./components/Header/Header";
-import NavBar from "./components/NavBar/NavBar";
-import ContactsList from "./components/ContactsList/ContactsList";
-import ContactDetails from "./components/ContactDetails/ContactDetails";
-import AddContactForm from './components/ContactForm/AddContactForm';
-import HomePage from './pages/HomePage/HomePage';
 import AuthPage from './pages/AuthPage/AuthPage';
+// import Header from "./components/Header/Header";
+// import NavBar from "./components/NavBar/NavBar";
+// import ContactsList from "./components/ContactsList/ContactsList";
+// import ContactDetails from "./components/ContactDetails/ContactDetails";
+// import AddContactForm from './components/ContactForm/AddContactForm';
+import HomePage from './pages/HomePage/HomePage';
+import { Routes, Route } from "react-router-dom";
+import Layout from './pages/Layout/Layout';
 
 function App() {
 
@@ -21,7 +23,12 @@ function App() {
         </div>
       </main>
       <AddContactForm displayForm={false}/> */}
-      <HomePage/>
+      <Routes>
+        <Route path='/' element={<HomePage/>} />
+        <Route path='/login' element={<AuthPage LoginFormMode={'Login'}/>} />
+        <Route path='/register' element={<AuthPage LoginFormMode={'Register'}/>} />
+        <Route path='/dashboard' element={<Layout/>} />
+      </Routes>
       {/* <AuthPage LoginFormMode={"Login"} /> */}
     </>
   )

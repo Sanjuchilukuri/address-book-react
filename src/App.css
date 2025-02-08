@@ -88,3 +88,13 @@
 .extra-small-text{
     font-size: .7rem;
 }
+.hover-light-sky-blue
+{
+    &:hover{
+        background-color: var(--light-sky-blue) !important;
+        color: black !important;
+    }
+}
+.border-white{
+    border-color: white !important;
+}
