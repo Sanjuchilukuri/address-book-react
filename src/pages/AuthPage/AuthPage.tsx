@@ -5,6 +5,7 @@ import Button from '../../components/Button/Button';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { useMsal } from '@azure/msal-react';
 
 interface IAuthPageProps{
     LoginFormMode:'Login'|'Register';
@@ -22,6 +23,13 @@ function AuthPage(props:IAuthPageProps) {
   const handleAuthformVisibility = () => {
     setAuthFormVisibility(true);
   }
+
+  const  {instance} = useMsal();
+
+  const handleMicrosoftLogin = () => {
+    debugger;
+    instance.loginPopup();
+  }
   
   return (
     <div className={`${HomePageCss['background-image']} vh-100 d-flex justify-content-center align-items-center`}>
@@ -29,7 +37,7 @@ function AuthPage(props:IAuthPageProps) {
         <h3 className="text-center fw-medium mb-3 h4">{props.LoginFormMode == 'Login'?'Sign In':'Sign Up'}</h3>
 
         <div className="d-flex flex-column gap-2 pb-3">
-          <Button onClick={()=>{alert("clicked")}} size={'py-2 px-3 rounded-3 w-100'} color={''} extraClases='border d-flex align-items-center gap-2'>
+          <Button onClick={()=>{handleMicrosoftLogin()}} size={'py-2 px-3 rounded-3 w-100'} color={''} extraClases='border d-flex align-items-center gap-2'>
             <img src={microsoftIcon} alt="Microsoft Icon" width="20" />
             <span className="flex-grow-1 small text-center">{props.LoginFormMode == 'Login'?'Sign in ':'Sign up '} with Microsoft</span>
           </Button>
@@ -90,7 +98,3 @@ function AuthPage(props:IAuthPageProps) {
 }
 
 export default AuthPage;
-function handleSubmit() {
-  throw new Error('Function not implemented.');
-}
-
