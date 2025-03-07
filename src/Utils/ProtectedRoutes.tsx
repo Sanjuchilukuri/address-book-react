@@ -1,11 +1,9 @@
-import { useMsal } from "@azure/msal-react";
 import { Navigate, Outlet } from "react-router-dom";
 
 function ProtectedRoutes() {
-  const { instance } = useMsal();
-  const accounts = instance.getAllAccounts();
+  const userInfo = JSON.parse(localStorage.getItem("user") || "{}"); 
 
-  return accounts && accounts.length > 0 ? <Outlet /> : <Navigate to="/" />;
+  return userInfo.userName && userInfo.email ? <Outlet /> : <Navigate to="/" />;
 }
 
 export default ProtectedRoutes;

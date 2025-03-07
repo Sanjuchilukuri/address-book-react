@@ -1,5 +1,4 @@
 import { FaPlus } from "react-icons/fa6";
-import Blogicon from "../../assets/blog-icon.png"
 import { useState } from "react";
 import AddContactForm from "../ContactForm/AddContactForm";
 import { NavLink } from "react-router-dom";

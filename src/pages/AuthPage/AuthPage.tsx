@@ -6,7 +6,9 @@ import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useContext, useEffect, useState } from 'react';
 import { useMsal } from '@azure/msal-react';
+import axios from 'axios';
 import { UserContext } from '../../context/UserContext';
+import { useGoogleLogin } from '@react-oauth/google';
 
 interface IAuthPageProps{
     LoginFormMode:'Login'|'Register';
@@ -19,7 +21,6 @@ function AuthPage(props:IAuthPageProps) {
   const {updateUser}  = useContext(UserContext);
 
   useEffect(() => {
-    debugger;
     async function FetchAccounts(){
       await instance.initialize();
       await instance.handleRedirectPromise(); 
@@ -35,7 +36,8 @@ function AuthPage(props:IAuthPageProps) {
 
 
   const handleSubmit = (mode:any) => {
-    navigate('/dashboard');
+    // navigate('/dashboard');
+    alert("Manual "+mode+" mode not implemented yet!!!");
   };
 
   const handleAuthformVisibility = () => setAuthFormVisibility(true);
@@ -48,6 +50,17 @@ function AuthPage(props:IAuthPageProps) {
     }
   };
 
+  const handleGoogleLogin = useGoogleLogin({
+    onSuccess: async (response) => {
+      debugger;
+      const { data } = await axios.get("https://www.googleapis.com/oauth2/v3/userinfo", {
+          headers: { Authorization: `Bearer ${response.access_token}` },
+      });
+      updateUser({ userName: data?.name!, email: data?.email });
+      navigate('/dashboard');
+    },
+    onError: () => console.log("Login Failed"),
+  });
   
   return (
     <div className={`${HomePageCss['background-image']} vh-100 d-flex justify-content-center align-items-center`}>
@@ -62,7 +75,7 @@ function AuthPage(props:IAuthPageProps) {
 
           <div className="text-center fw-bold small text-muted">OR</div>
 
-          <Button onClick={()=>{alert("clicked")}} size={'py-2 px-3 rounded-3 w-100'} color={''} extraClases='border d-flex align-items-center gap-2'>
+          <Button onClick={()=>{handleGoogleLogin()}} size={'py-2 px-3 rounded-3 w-100'} color={''} extraClases='border d-flex align-items-center gap-2'>
             <img src={googleIcon} alt="Microsoft Icon" width="20" />
             <span className="flex-grow-1 small text-center">{props.LoginFormMode == 'Login'?'Sign in ':'Sign up '} with Google</span>
           </Button>

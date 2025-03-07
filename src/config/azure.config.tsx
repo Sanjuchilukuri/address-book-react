@@ -2,7 +2,7 @@ import { BrowserCacheLocation, PublicClientApplication } from '@azure/msal-brows
  
 const config : any = {  
   auth: {
-    clientId: 'fcf9621e-84a0-46e1-a350-309f686bf012',
+    clientId: import.meta.env.VITE_AZURE_CLIENT_ID,
     // redirectUri: 'https://delightful-sky-0a0da3f00-preview.eastasia.4.azurestaticapps.net/',
     redirectUri: 'http://localhost:5173/ ',
   },
