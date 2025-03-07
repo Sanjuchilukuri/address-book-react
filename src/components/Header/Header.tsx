@@ -1,5 +1,8 @@
+import { useContext, useState } from 'react';
 import Button from '../Button/Button';
 import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../../context/UserContext';
+import { TbLogout } from "react-icons/tb";
 
 interface IHeaderProps {
     styleClasses: string;
@@ -8,7 +11,21 @@ interface IHeaderProps {
 
 function Header(props:IHeaderProps) 
 {
-  const navigate = useNavigate()
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const [logoutOptionVisibility, SetlogoutOptionVisibility ] = useState(false);
+
+  const handleLogoutVisibility = () =>{
+    SetlogoutOptionVisibility(!logoutOptionVisibility);
+  }
+
+  const handleLogout = () => {
+    debugger;
+    localStorage.clear();
+    sessionStorage.clear();
+    navigate('/');
+  }
 
   return (
     // style={{backgroundColor:"#424242"}}
@@ -33,8 +50,17 @@ function Header(props:IHeaderProps)
                 </Button>
             </div>
             :
-            <div>
-                <p className="cursor-pointer fw-medium  text-capitalize text-white">Hi, Sanju</p>
+            <div className='position-relative '>
+                <p className="cursor-pointer fw-medium  text-capitalize text-white" onClick={handleLogoutVisibility}>Hi, {user?.userName}</p>
+                {logoutOptionVisibility &&
+                    <div 
+                        className='top-100 rounded-2 d-flex align-items-center gap-2 position-absolute bg-light shadow ps-2 pe-3 cursor-pointer py-1'
+                        onClick={handleLogout}
+                    >
+                        <span className='text-sky-blue fs-5'><TbLogout /></span>
+                        <p>Logout</p>
+                    </div>
+                }
             </div>
         }
     

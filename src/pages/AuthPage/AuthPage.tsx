@@ -4,32 +4,50 @@ import googleIcon from '../../assets/google-icon.svg';
 import Button from '../../components/Button/Button';
 import { NavLink } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useMsal } from '@azure/msal-react';
+import { UserContext } from '../../context/UserContext';
 
 interface IAuthPageProps{
     LoginFormMode:'Login'|'Register';
 }
 
 function AuthPage(props:IAuthPageProps) {
+  const { instance } = useMsal();
   const navigate = useNavigate();
   const [AuthFormVisibility, setAuthFormVisibility] = useState(false);  
+  const {updateUser}  = useContext(UserContext);
 
-  const handleSubmit = (mode: 'Login' | 'Register') => {
-    console.log(mode);
+  useEffect(() => {
+    debugger;
+    async function FetchAccounts(){
+      await instance.initialize();
+      await instance.handleRedirectPromise(); 
+      const accounts = await instance.getAllAccounts();
+      if (accounts?.length) {
+        const user = accounts[0];
+        updateUser({ userName: user.name!, email: user.username });
+        navigate('/dashboard');
+      }
+    }
+    FetchAccounts();
+  }, []);
+
+
+  const handleSubmit = (mode:any) => {
     navigate('/dashboard');
   };
 
-  const handleAuthformVisibility = () => {
-    setAuthFormVisibility(true);
-  }
+  const handleAuthformVisibility = () => setAuthFormVisibility(true);
 
-  const  {instance} = useMsal();
+  const handleMicrosoftLogin = async () => {
+    await instance.handleRedirectPromise(); 
+    const accounts = instance.getAllAccounts();
+    if (!accounts?.length) {
+      await instance.loginRedirect(); 
+    }
+  };
 
-  const handleMicrosoftLogin = () => {
-    debugger;
-    instance.loginPopup();
-  }
   
   return (
     <div className={`${HomePageCss['background-image']} vh-100 d-flex justify-content-center align-items-center`}>

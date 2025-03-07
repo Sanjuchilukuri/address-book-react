@@ -98,3 +98,6 @@
 .border-white{
     border-color: white !important;
 }
+.text-sky-blue{
+    color: var(--primary-sky-blue) !important;
+}
